@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:55:09 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/26 18:08:31 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:31:47 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	init_data(t_data *data, t_philo *philos)
 {
 	data->dead_flag = 0;
 	data->philos = philos;
+	pthread_mutex_init(&data->print_lock, NULL);
 	pthread_mutex_init(&data->dead_lock, NULL);
 	pthread_mutex_init(&data->meal_lock, NULL);
-	pthread_mutex_init(&data->print_lock, NULL);
 }
 
 void	init_forks(pthread_mutex_t *forks, int philo_num)
@@ -54,9 +54,9 @@ void	init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks,
 	while (i < ft_atoi(av[1]))
 	{
 		philos[i].id = i + 1;
+		init_input(&philos[i], av);
 		philos[i].eating = 0;
 		philos[i].meals_eaten = 0;
-		init_input(&philos[i], av);
 		philos[i].time_start = get_current_time();
 		philos[i].time_last_meal = get_current_time();
 		philos[i].print_lock = &data->print_lock;
@@ -72,16 +72,13 @@ void	init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks,
 	}
 }
 
-void	destroy_all(char *str, t_data *data, pthread_mutex_t *forks)
+void	destroy_all(char *msg, t_data *data, pthread_mutex_t *forks)
 {
 	int	i;
 
 	i = 0;
-	if (str)
-	{
-		write(2, str, ft_strlen(str));
-		write(2, "\n", 1);
-	}
+	if (msg)
+		write(2, msg, ft_strlen(msg));
 	pthread_mutex_destroy(&data->dead_lock);
 	pthread_mutex_destroy(&data->meal_lock);
 	pthread_mutex_destroy(&data->print_lock);

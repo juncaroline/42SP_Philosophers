@@ -6,7 +6,7 @@
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 13:17:38 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/27 09:29:15 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/28 10:06:11 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int ac, char **av)
 		init_data(&data, philos);
 		init_forks(forks, ft_atoi(av[1]));
 		init_philos(philos, &data, forks, av);
+		create_thread(&data, forks);
+		destroy_all(NULL, &data, forks);
 	}
 	else
 	{

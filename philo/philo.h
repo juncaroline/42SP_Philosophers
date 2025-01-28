@@ -6,7 +6,7 @@
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 13:17:08 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/27 09:46:31 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:57:17 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
@@ -52,6 +53,7 @@ typedef struct s_data
 //check.c
 int		check_valid_args(char **av);
 void	print_msg(char *str, t_philo *philo, int id);
+int		dead_loop(t_philo *philo);
 
 //init_end.c
 void	init_data(t_data *data, t_philo *philos);
@@ -59,8 +61,6 @@ void	init_forks(pthread_mutex_t *forks, int philo_num);
 void	init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks,
 			char **av);
 void	destroy_all(char *str, t_data *data, pthread_mutex_t *forks);
-
-//main.c
 
 //routine.c
 void	*philo_routine(void *ptr);
@@ -73,8 +73,8 @@ int		create_thread(t_data *data, pthread_mutex_t *forks);
 
 //utils.c
 int		ft_atoi(const char *str);
-int		ft_strlen(char *str);
-int		custom_usleep(long req_time);
+int		ft_strlen(const char *str);
+int		custom_usleep(unsigned long req_time);
 size_t	get_current_time(void);
 
 #endif

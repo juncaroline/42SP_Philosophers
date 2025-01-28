@@ -6,7 +6,7 @@
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 11:44:40 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/26 18:07:43 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:26:58 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_atoi(const char *str)
 	return (res * neg);
 }
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int	i;
 
@@ -49,9 +49,9 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	custom_usleep(long req_time)
+int	custom_usleep(unsigned long req_time)
 {
-	long	start;
+	unsigned long	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < req_time)

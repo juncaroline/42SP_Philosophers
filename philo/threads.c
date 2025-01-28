@@ -6,7 +6,7 @@
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:41:18 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/27 09:31:50 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:27:09 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_if_dead(t_philo *philos)
 	i = 0;
 	while (i < philos[0].num_of_philos)
 	{
-		pthread_mutex_lock(&philos[i].meal_lock);
+		pthread_mutex_lock(philos[i].meal_lock);
 		if (get_current_time() - philos[i].time_last_meal
 			>= philos[i].time_to_die && philos[i].eating == 0)
 		{
@@ -69,8 +69,11 @@ void	*monitor(void *ptr)
 
 	philos = (t_philo *)ptr;
 	while (1)
+	{
 		if (check_if_dead(philos) == 1 || check_if_all_ate(philos) == 1)
 			break ;
+		usleep(100);
+	}
 	return (ptr);
 }
 
@@ -80,22 +83,22 @@ int	create_thread(t_data *data, pthread_mutex_t *forks)
 	int			i;
 
 	if (pthread_create(&manager, NULL, &monitor, data->philos) != 0)
-		destroy_all("Error creating thread", data, forks);
+		destroy_all("Error creating monitor thread\n", data, forks);
 	i = 0;
 	while (i < data->philos[0].num_of_philos)
 	{
 		if (pthread_create(&data->philos[i].thread, NULL, &philo_routine,
 				&data->philos[i]) != 0)
-			destroy_all("Error creating thread", data, forks);
+			destroy_all("Error creating philosopher thread\n", data, forks);
 		i++;
 	}
 	i = 0;
 	if (pthread_join(manager, NULL) != 0)
-		destroy_all("Error joining thread", data, forks);
+		destroy_all("Error joining monitor thread\n", data, forks);
 	while (i < data->philos[0].num_of_philos)
 	{
 		if (pthread_join(data->philos[i].thread, NULL) != 0)
-			destroy_all("Error joining thread", data, forks);
+			destroy_all("Error joining philosopher thread\n", data, forks);
 		i++;
 	}
 	return (0);
