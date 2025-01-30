@@ -6,14 +6,14 @@
 #    By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/10 12:23:00 by cabo-ram          #+#    #+#              #
-#    Updated: 2025/01/27 16:22:04 by cabo-ram         ###   ########.fr        #
+#    Updated: 2025/01/30 11:30:19 by cabo-ram         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := philo
 CC := gcc
 CFLAGS := -g -Wall -Wextra -Werror -pthread
-SRC:= check.c init_end.c main.c routine.c threads.c utils.c
+SRC:= check.c init_end.c main.c monitor.c routine.c threads.c utils.c
 OBJS := $(SRC:.c=.o)
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 11:44:40 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/28 18:26:58 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/30 14:26:00 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	custom_usleep(unsigned long req_time)
 
 	start = get_current_time();
 	while ((get_current_time() - start) < req_time)
-		usleep(1000);
+		usleep(500);
 	return (0);
 }
 

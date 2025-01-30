@@ -6,7 +6,7 @@
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:09:20 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/28 18:30:48 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/30 14:28:06 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	print_msg(char *str, t_philo *philo, int id)
 	pthread_mutex_lock(philo->print_lock);
 	time = get_current_time() - philo->time_start;
 	if (!dead_loop(philo))
-		printf("%zu - Philo %d %s\n", time, id, str);
+		printf("%zu %d %s\n", time, id, str);
 	pthread_mutex_unlock(philo->print_lock);
 }

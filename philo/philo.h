@@ -6,7 +6,7 @@
 /*   By: cabo-ram <cabo-ram@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 13:17:08 by cabo-ram          #+#    #+#             */
-/*   Updated: 2025/01/28 16:57:17 by cabo-ram         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:32:30 by cabo-ram         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				eating;
+	int				is_eating;
 	int				meals_eaten;
-	int				num_of_philos;
-	int				num_times_eat;
+	int				total_philos;
+	int				meals_required;
 	int				*dead;
 	size_t			time_start;
 	size_t			time_last_meal;
@@ -46,30 +46,33 @@ typedef struct s_data
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	print_lock;
-	int				dead_flag;
-	t_philo			*philos;
+	int				is_dead;
+	t_philo			*philo_group;
 }	t_data;
 
 //check.c
 int		check_valid_args(char **av);
-void	print_msg(char *str, t_philo *philo, int id);
 int		dead_loop(t_philo *philo);
+void	print_msg(char *str, t_philo *philo, int id);
 
 //init_end.c
 void	init_data(t_data *data, t_philo *philos);
-void	init_forks(pthread_mutex_t *forks, int philo_num);
+void	init_forks(pthread_mutex_t *forks, int total_philos);
 void	init_philos(t_philo *philos, t_data *data, pthread_mutex_t *forks,
 			char **av);
 void	destroy_all(char *str, t_data *data, pthread_mutex_t *forks);
+
+//monitor.c
+int		check_death(t_philo *philos);
+int		check_if_all_ate(t_philo *philos);
+void	*monitor(void *ptr);
 
 //routine.c
 void	*philo_routine(void *ptr);
 
 //threads.c
-int		check_if_dead(t_philo *philos);
-int		check_if_all_ate(t_philo *philos);
-void	*philo_routine(void *ptr);
-int		create_thread(t_data *data, pthread_mutex_t *forks);
+//int		create_thread(t_data *data, pthread_mutex_t *forks);
+int		create_and_join(t_data *data, pthread_mutex_t *forks);
 
 //utils.c
 int		ft_atoi(const char *str);
